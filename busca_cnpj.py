@@ -29,6 +29,7 @@ lista['cnpjs'] = lista['cnpjs'].astype(str)
 df = pd.DataFrame({
     'RazaoSocial': [],
     'CNPJ': [],
+    'Status na RF': [],
     'NaturezaJuridica': [],
     'Rua': [],
     'Numero': [],
@@ -51,6 +52,7 @@ for index, row in lista.iterrows():
 
         if isinstance(data, dict):  # Verifica se a resposta é um dicionário
             razao_social = data['company']['name']
+            status_na_rf = data['status']['text']
             natureza_juridica = data['company']['nature']['text']
             rua = data['address'].get('street', 'N/A')
             numero = data['address'].get('number', 'N/A')
@@ -61,6 +63,7 @@ for index, row in lista.iterrows():
             pais = data['address']['country'].get('name', 'N/A')
 
             nova_linha = pd.DataFrame({'RazaoSocial': [razao_social],
+                                       'Status na RF': [status_na_rf],
                                        'CNPJ': [row['cnpjs']],  # Corrigido para usar row['cnpjs']
                                        'NaturezaJuridica': [natureza_juridica],
                                        'Rua': [rua],
